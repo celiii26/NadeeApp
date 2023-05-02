@@ -37,12 +37,12 @@ const HomeScreen = () => {
 
         
       <View style={styles.popularWrapper}>
-          <Text style={styles.popularTitle}></Text>
+
           {popularData.map((item) => (
             <TouchableOpacity
               key={item.id}
               onPress={() =>
-                navigation.navigate('Details', {
+                navigation.navigate('DetailScreen', {
                   item: item,
                 })
               }>
@@ -69,11 +69,11 @@ const HomeScreen = () => {
                     </View>
                   </View>
                   <View style={styles.popularCardBottom}>
-                    <View style={styles.detailButton}>
+                    <TouchableOpacity style={styles.detailButton} onPress={() => navigation.navigate('DetailScreen')}>
                       <Text style={styles.buttonName}>
                         Lihat Detail
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
 
