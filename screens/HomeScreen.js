@@ -4,13 +4,13 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
   SafeAreaView,
   FlatList,
   ScrollView,
+  Button,
 } from 'react-native'
 import { auth } from '../firebase'
 import { signOut } from "firebase/auth";
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import popularData from '../assets/Data/popularData';
-
 
 const HomeScreen = () => {
   const navigation = useNavigation()
@@ -37,7 +37,7 @@ const HomeScreen = () => {
 
         
       <View style={styles.popularWrapper}>
-          <Text style={styles.popularTitle}>Popular</Text>
+          <Text style={styles.popularTitle}></Text>
           {popularData.map((item) => (
             <TouchableOpacity
               key={item.id}
@@ -55,34 +55,24 @@ const HomeScreen = () => {
                 ]}>
                 <View>
                   <View>
-                    <View style={styles.popularTopWrapper}>
-                      <MaterialCommunityIcons
-                        name="crown"
-                        size={12}
-                        color={"black"}
-                      />
-                      <Text style={styles.popularTopText}>top of the week</Text>
-                    </View>
                     <View style={styles.popularTitlesWrapper}>
+
                       <Text style={styles.popularTitlesTitle}>
-                        {item.title}
+                        Nama: {item.name}
                       </Text>
-                      <Text style={styles.popularTitlesWeight}>
-                        Weight {item.weight}
+                      <Text style={styles.popularTitlesTitle}>
+                        Umur: {item.age}
+                      </Text>
+                      <Text style={styles.popularTitlesTitle}>
+                        Profesi: {item.profesi}
                       </Text>
                     </View>
                   </View>
                   <View style={styles.popularCardBottom}>
-                    <View style={styles.addPizzaButton}>
-                      <Feather name="plus" size={10} color={"black"} />
-                    </View>
-                    <View style={styles.ratingWrapper}>
-                      <MaterialCommunityIcons
-                        name="star"
-                        size={10}
-                        color={"black"}
-                      />
-                      <Text style={styles.rating}>{item.rating}</Text>
+                    <View style={styles.detailButton}>
+                      <Text style={styles.buttonName}>
+                        Lihat Detail
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -103,6 +93,11 @@ const HomeScreen = () => {
       >
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
+
+      <Button style={styles.buttonProfile}
+        title="Your Profile"
+        onPress={() => navigation.navigate('Profile')}
+      />
     </View>
   )
 }
@@ -110,6 +105,14 @@ const HomeScreen = () => {
 export default HomeScreen
 
 const styles = StyleSheet.create({
+  buttonProfile: {
+    backgroundColor: '#85586F',
+    width: '60%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+
+  },
   container: {
     flex: 1,
     backgroundColor: '#D8CBBB',
@@ -243,6 +246,8 @@ const styles = StyleSheet.create({
   },
   popularCardWrapper: {
     backgroundColor: 'white',
+    width: 250,
+    height: 130,
     borderRadius: 25,
     paddingTop: 20,
     paddingLeft: 20,
@@ -267,31 +272,34 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   popularTitlesWrapper: {
-    marginTop: 20,
+    marginTop: 10,
+    flexDirection: 'column',
   },
   popularTitlesTitle: {
     fontFamily: 'arial',
-    fontSize: 14,
-    color: 'black',
-  },
-  popularTitlesWeight: {
-    fontFamily: 'arial',
     fontSize: 12,
-    color: "white",
-    marginTop: 5,
+    color: 'black',
+    flexDirection: 'column',
   },
   popularCardBottom: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
-    marginLeft: -20,
+    marginLeft: 5,
   },
-  addPizzaButton: {
-    backgroundColor: "yellow",
-    paddingHorizontal: 40,
-    paddingVertical: 20,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
+  detailButton: {
+    backgroundColor: "#85586F",
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+  },
+  buttonName: {
+    color: "#F5F5F5",
+    fontSize: 12,
+    fontFamily: 'arial',
   },
   ratingWrapper: {
     flexDirection: 'row',
@@ -305,11 +313,11 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   popularCardRight: {
-    marginLeft: 40,
+    marginRight:15,
   },
   popularCardImage: {
-    width: 210,
-    height: 125,
+    width: 150,
+    height: 90,
     resizeMode: 'contain',
   },
 })
