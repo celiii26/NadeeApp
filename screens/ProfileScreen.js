@@ -1,9 +1,15 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
-
+import { View, Text, StyleSheet, Image, Button, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 const ProfileScreen = () => {
+  const navigation = useNavigation()
     return (
         <View style={styles.container}>
+      <View style={{ flexDirection: 'row', alignItems: 'stretch', padding: 10}}>
+      <TouchableOpacity style={styles.detailButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
+      </View>
         <Image
           style={styles.profilePic}
           source={{ uri: 'https://dummyimage.com/300x300/000/fff' }}
@@ -66,10 +72,34 @@ const ProfileScreen = () => {
 }
 export default ProfileScreen
 const styles = StyleSheet.create({
+  header: {
+    flex: 1,
+    justifyContent: 'left',
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row', 
+    padding: 10
+  },
+  detailButton: {
+    backgroundColor: "#85586F",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    marginBottom: 5,
+    marginRight: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '500',
+    fontSize: 14,
+  },
     container: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      flexDirection: 'column',
       backgroundColor: '#FFFFFF',
     },
     profilePic: {
