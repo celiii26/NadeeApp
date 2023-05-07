@@ -11,12 +11,21 @@ import { signOut } from "firebase/auth";
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import popularData from '../assets/Data/popularData';
+import { useFonts } from '@use-expo/font';
+import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
 
 const HomeScreen = () => {
   const navigation = useNavigation()
   const user = auth.currentUser;
   const email = user.email;
 
+  const [isLoaded] = useFonts({
+    PoppinsLight: PoppinsLight,
+  });
+
+  if (!isLoaded) {
+    return <View />;
+  }
   const handleSignOut = () => {
       signOut(auth)
       .then(() => {
@@ -31,73 +40,69 @@ const HomeScreen = () => {
   return (
     
     <View style={styles.container}>
+      <View style={styles.cardheader}>
+      <TouchableOpacity style={styles.detailButton} onPress={() => navigation.navigate('Profile')}>
+        <Text style={styles.buttonText}>Profile</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Request Inbox')}
+        style={styles.detailButton}
+      >
+        
+        <Text style={styles.buttonText}>Request Inbox</Text>
+      </TouchableOpacity>
+      </View>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>
-
         
       <View style={styles.popularWrapper}>
 
           {popularData.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() =>
-                navigation.navigate('DetailScreen', {
-                  item: item,
-                })
-              }>
-              <View
-                style={[
-                  styles.popularCardWrapper,
-                  {
-                    marginTop: item.id == 1 ? 10 : 20,
-                  },
-                ]}>
-                <View>
-                  <View>
-                    <View style={styles.popularTitlesWrapper}>
-
-                      <Text style={styles.popularTitlesTitle}>
-                        Nama: {item.name}
-                      </Text>
-                      <Text style={styles.popularTitlesTitle}>
-                        Umur: {item.age}
-                      </Text>
-                      <Text style={styles.popularTitlesTitle}>
-                        Profesi: {item.profesi}
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={styles.popularCardBottom}>
-                    <TouchableOpacity style={styles.detailButton} onPress={() => navigation.navigate('DetailScreen')}>
-                      <Text style={styles.buttonName}>
-                        Lihat Detail
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-
-                <View style={styles.popularCardRight}>
-                  <Image source={item.image} style={styles.popularCardImage} />
-                </View>
+      <TouchableOpacity
+        key={item.id}
+        onPress={() =>
+          navigation.navigate('DetailScreen', {
+            item: item,
+          })
+        }
+      >
+        <View
+          style={[
+            styles.popularCardWrapper,
+            {
+              marginTop: item.id == 1 ? 10 : 20,
+            },
+          ]}
+        >
+          <View>
+            <View>
+              <View style={styles.popularTitlesWrapper}>
+                <Text style={styles.popularTitlesTitle}>{item.name}</Text>
+                <Text style={styles.popularTitlesTitle}>{item.age} tahun</Text>
+                <Text style={styles.popularTitlesTitle}>{item.profesi}</Text>
+                <Text style={styles.popularTitlesTitle}>{item.domisili}</Text>
               </View>
-            </TouchableOpacity>
-          ))}
+            </View>
+          </View>
+
+          <View style={styles.popularCardRight}>
+            <Image source={item.image} style={styles.popularCardImage} />
+          </View>
+        </View>
+      </TouchableOpacity>
+    ))}
+
         </View>
         </ScrollView>
+      
 
-      <Text>Email: {email}</Text>
       <TouchableOpacity
         onPress={handleSignOut}
-        style={styles.button}
+        style={styles.detailButton}
       >
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
-
-      <Button style={styles.buttonProfile}
-        title="Your Profile"
-        onPress={() => navigation.navigate('Profile')}
-      />
     </View>
   )
 }
@@ -120,6 +125,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  cardheader: {
+    flexDirection:'row' ,
+    justifyContent: 'space-between',
+   },
   logoContainer: {
     flex: 0.5,
     justifyContent: 'center',
@@ -139,8 +148,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
+    fontWeight: '500',
+    fontSize: 14,
   },
   headerWrapper: {
     flexDirection: 'row',
@@ -187,56 +196,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: "black",
   },
-  categoriesWrapper: {
-    marginTop: 30,
-  },
-  categoriesTitle: {
-    fontFamily: 'arial',
-    fontSize: 16,
-    paddingHorizontal: 20,
-  },
-  categoriesListWrapper: {
-    paddingTop: 15,
-    paddingBottom: 20,
-  },
-  categoryItemWrapper: {
-    backgroundColor: '#F5CA48',
-    marginRight: 20,
-    borderRadius: 20,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
-    elevation: 2,
-  },
-  categoryItemImage: {
-    width: 60,
-    height: 60,
-    marginTop: 25,
-    alignSelf: 'center',
-    marginHorizontal: 20,
-  },
-  categoryItemTitle: {
-    textAlign: 'center',
-    fontFamily: 'arial',
-    fontSize: 14,
-    marginTop: 10,
-  },
-  categorySelectWrapper: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    width: 26,
-    height: 26,
-    borderRadius: 26,
-    marginBottom: 20,
-  },
-  categorySelectIcon: {
-    alignSelf: 'center',
-  },
+  
   popularWrapper: {
     paddingHorizontal: 20,
   },
@@ -261,6 +221,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 10,
     elevation: 2,
+    position: 'relative'
   },
   popularTopWrapper: {
     flexDirection: 'row',
@@ -276,8 +237,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   popularTitlesTitle: {
-    fontFamily: 'arial',
-    fontSize: 12,
+    fontFamily: 'PoppinsLight',
+    fontSize: 10,
     color: 'black',
     flexDirection: 'column',
   },
@@ -289,12 +250,14 @@ const styles = StyleSheet.create({
   },
   detailButton: {
     backgroundColor: "#85586F",
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderTopRightRadius: 5,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
+    marginBottom: 5,
+    marginRight: 5,
   },
   buttonName: {
     color: "#F5F5F5",
@@ -313,11 +276,19 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   popularCardRight: {
+    position: 'abosulte',
     marginRight:15,
+ 
   },
   popularCardImage: {
     width: 150,
     height: 90,
     resizeMode: 'contain',
   },
+  asalDaerah: {
+    fontFamily: 'arial',
+    fontSize: 12,
+    color: 'black',
+    flexDirection: 'column',
+  }
 })
