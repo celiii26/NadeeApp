@@ -7,12 +7,16 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
     Button,
   } from 'react-native'
 import popularData from '../assets/Data/popularData';
+import { color } from 'react-native-reanimated';
+
 
 const DetailScreen = ({ route }) => {
     const { item } = route.params;
-
+    const navigation = useNavigation();
     return (
         <View>
+          <ScrollView        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}>
         <View style={styles.container} key={item.id}>
         <Image
           style={styles.profilePic}
@@ -67,13 +71,57 @@ const DetailScreen = ({ route }) => {
             </View>
           
         </View>
+        <TouchableOpacity
+          style={styles.detailButton}
+          onPress={() => navigation.navigate('Request Sent', { item: item })}
+        >
+          <Text style={styles.buttonText}>Ajukan Taaruf</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.detailButtonBack} onPress={() => navigation.goBack()}>
+        <Text style={styles.buttonTextBack}>Back to Homepage</Text>
+      </TouchableOpacity>
+       
       </View>
-
+      </ScrollView>
     </View>
     )};
 
 export default DetailScreen
 const styles = StyleSheet.create({
+  buttonText: {
+    color: 'white',
+    fontWeight: '500',
+    fontSize: 14,
+  },
+  detailButton: {
+    backgroundColor: "#85586F",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    marginBottom: 10,
+    marginRight: 5,
+    marginTop: 10
+  },
+  detailButtonBack: {
+    backgroundColor: "#D8CBBB",
+    borderColor: 'black',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    marginBottom: 10,
+    marginRight: 5,
+  },
+  buttonTextBack: {
+    color: '#6E485B',
+    fontWeight: '500',
+    fontSize: 14,
+  },
     container: {
       flex: 1,
       alignItems: 'center',
@@ -85,6 +133,7 @@ const styles = StyleSheet.create({
       height: 150,
       borderRadius: 75,
       marginBottom: 20,
+      marginTop: 10,
     },
     name: {
       fontSize: 24,
@@ -128,6 +177,5 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'right',
-    }
-
+    },
   });
