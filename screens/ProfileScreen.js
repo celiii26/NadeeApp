@@ -1,15 +1,27 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { signOut } from "firebase/auth";
+import { auth } from '../firebase'
 const ProfileScreen = () => {
   const navigation = useNavigation()
+  const user = auth.currentUser;
+  const handleSignOut = () => {
+    signOut(auth)
+    .then(() => {
+      navigation.replace("Login")
+    })
+    .catch(error => {
+      const errorMessage = error.message;
+      alert(errorMessage);
+    })
+}
     return (
+    <View style={{flex: 1}}>
+    
+      <ScrollView contentInsetAdjustmentBehavior="automatic"
+      showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-      <View style={{ flexDirection: 'row', alignItems: 'stretch', padding: 10}}>
-      <TouchableOpacity style={styles.detailButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
-      </View>
         <Image
           style={styles.profilePic}
           source={{ uri: 'https://dummyimage.com/300x300/000/fff' }}
@@ -61,13 +73,22 @@ const ProfileScreen = () => {
               Saya adalah seorang pekerja keras yang sangat menghargai wanita. Saya mencari pasangan hidup yang mengerti agama dan mengerti saya.
             </Text>
             </View>
-            <Button style={styles.buttonProfile}
-        title="SAVE" 
-      />
+
+      <TouchableOpacity
+          style={styles.detailButton}
+        >
+          <Text style={styles.buttonText}>SIMPAN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.detailButtonBack} onPress={handleSignOut}>
+        <Text style={styles.buttonTextBack}>SIGN OUT</Text>
+      </TouchableOpacity>
+       
           
 
         </View>
       </View>
+      </ScrollView>
+    </View>
     );
 }
 export default ProfileScreen
@@ -87,13 +108,35 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
-    marginBottom: 5,
+    marginBottom: 10,
     marginRight: 5,
+    marginTop: 10
+  },
+  detailButtonBack: {
+    backgroundColor: "#D8CBBB",
+    borderColor: 'black',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    marginBottom: 10,
+    marginRight: 5,
+  },
+  buttonTextBack: {
+    color: '#6E485B',
+    fontWeight: '500',
+    fontSize: 14,
+    paddingLeft:8,
+    paddingRight: 8,
   },
   buttonText: {
     color: 'white',
     fontWeight: '500',
     fontSize: 14,
+    paddingLeft:8,
+    paddingRight: 8,
   },
     container: {
       flex: 1,
