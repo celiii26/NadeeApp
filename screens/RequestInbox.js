@@ -7,9 +7,18 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
   Button,
 } from 'react-native'
 import requestData from '../assets/data/requestData'
+import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
+import { useFonts } from '@use-expo/font';
 
 const RequestInbox = () => {
   const navigation = useNavigation()
+  const [isLoaded] = useFonts({
+    PoppinsLight: PoppinsLight,
+  });
+
+  if (!isLoaded) {
+    return <View />;
+  }
 
   return (
     
@@ -43,7 +52,7 @@ const RequestInbox = () => {
                 <Text style={styles.popularTitlesTitle}>{item.name}</Text>
                 <Text style={styles.popularTitlesTitle}>{item.age} tahun</Text>
                 <Text style={styles.popularTitlesTitle}>{item.profesi}</Text>
-                <Text style={styles.asalDaerah}>{item.domisili}</Text>
+                <Text style={styles.popularTitlesTitle}>{item.domisili}</Text>
               </View>
             </View>
           </View>
@@ -57,9 +66,6 @@ const RequestInbox = () => {
 
         </View>
         </ScrollView>
-        <TouchableOpacity style={styles.detailButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
 
 
     </View>
@@ -196,8 +202,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   popularTitlesTitle: {
-    fontFamily: 'arial',
-    fontSize: 12,
+    fontFamily: 'PoppinsLight',
+    fontSize: 10,
     color: 'black',
     flexDirection: 'column',
   },
@@ -234,15 +240,22 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   popularCardRight: {
-    position: 'abosulte',
-    marginRight:15,
- 
+    position: 'absolute', // Set the position property to 'absolute'
+    right: 5, // Align the image to the right of the card
+    top: 20, // Align the image to the top of the card
+    bottom: 0, // Align the image to the bottom of the card// Set the width of the image to half of the card's width
+    overflow: 'hidden',
   },
   popularCardImage: {
-    width: 150,
+    width: 90,
     height: 90,
     resizeMode: 'contain',
+    position: 'abosulte',
+    borderRadius: 75,
+    marginRight:15,
+
   },
+
   asalDaerah: {
     fontFamily: 'arial',
     fontSize: 12,
