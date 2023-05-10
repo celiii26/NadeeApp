@@ -6,26 +6,19 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
   ScrollView,
   Button,
 } from 'react-native'
-import { auth } from '../firebase'
-import { signOut } from "firebase/auth";
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import popularData from '../assets/Data/popularData';
+import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
+import { useFonts } from '@use-expo/font';
 
 const RequestSent = ({ route }) => {
   const { item } = route.params;
   const navigation = useNavigation()
-  const showAlert = () => {
-    Alert.alert(
-      'Apakah anda yakin untuk membatalkan proses taaruf?',
-      'Apakah anda yakin?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Back to Homepage', onPress: () => navigation.navigate("Home") },
-      ],
-      { cancelable: false }
-    );
-  };
+  const [isLoaded] = useFonts({
+    PoppinsLight: PoppinsLight,
+  });
+
+  if (!isLoaded) {
+    return <View />;
+  }
 
   return (
     <View style={styles.container}>
@@ -57,7 +50,7 @@ const RequestSent = ({ route }) => {
             <Text style={styles.popularTitlesTitle}>
               {item.profesi}
             </Text>
-            <Text style={styles.asalDaerah}>
+            <Text style={styles.popularTitlesTitle}>
               {item.domisili}
             </Text>
           </View>
@@ -69,7 +62,7 @@ const RequestSent = ({ route }) => {
       </View>
     </View>
   </TouchableOpacity>
-  <TouchableOpacity style={styles.detailButton} onPress={showAlert}>
+  <TouchableOpacity style={styles.detailButton} onPress={() => navigation.navigate('Progress')}>
     <Text style={styles.buttonText}>
       Lihat Progress
       </Text>
@@ -244,7 +237,7 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
     },
     popularTitlesTitle: {
-      fontFamily: 'arial',
+      fontFamily: 'PoppinsLight',
       fontSize: 12,
       color: 'black',
       flexDirection: 'column',
@@ -273,14 +266,20 @@ const styles = StyleSheet.create({
       marginLeft: 5,
     },
     popularCardRight: {
-      position: 'abosulte',
-      marginRight:15,
-   
+      position: 'absolute', // Set the position property to 'absolute'
+      right: 5, // Align the image to the right of the card
+      top: 20, // Align the image to the top of the card
+      bottom: 0, // Align the image to the bottom of the card// Set the width of the image to half of the card's width
+      overflow: 'hidden',
     },
     popularCardImage: {
-      width: 150,
+      width: 90,
       height: 90,
       resizeMode: 'contain',
+      position: 'abosulte',
+      borderRadius: 75,
+      marginRight:15,
+  
     },
     asalDaerah: {
       fontFamily: 'arial',
