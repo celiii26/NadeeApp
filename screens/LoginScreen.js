@@ -14,7 +14,7 @@ const LoginScreen = () => {
     const unsubscribe = getAuth();
     onAuthStateChanged(auth, user => {
       if (user) {
-        navigation.replace("Home")
+        navigation.replace("HomeTab")
       }
     })
 
@@ -51,7 +51,7 @@ const LoginScreen = () => {
       behavior="padding"
     >
       <View style={styles.logoContainer}>
-      <Image style={styles.logo} source={require("../assets/logoNadee1.png")} />
+      <Image style={styles.logo} source={require("../assets/images/logoNadee1.png")} />
       </View>
       <View style={styles.inputContainer}>
         
