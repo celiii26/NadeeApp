@@ -77,9 +77,7 @@ const DetailScreen = ({ route }) => {
         >
           <Text style={styles.buttonText}>Ajukan Taaruf</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.detailButtonBack} onPress={() => navigation.goBack()}>
-        <Text style={styles.buttonTextBack}>Back to Homepage</Text>
-      </TouchableOpacity>
+
        
       </View>
       </ScrollView>
