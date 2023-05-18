@@ -2,10 +2,18 @@ import * as React from 'react';
 import { View, Text, StyleSheet, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { signOut } from "firebase/auth";
-import { auth } from '../firebase'
+import { auth, useAuth} from '../firebase';
+import { useEffect, useState } from 'react';
+import { doc, getDoc, onSnapshot, query, collection, where} from 'firebase/firestore';
+import db from "../firebase"
+
+
 const ProfileScreen = () => {
+
   const navigation = useNavigation()
-  const user = auth.currentUser;
+  const currentUser = useAuth();
+
+  const [photoURL, setPhotoURL] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
   const handleSignOut = () => {
     signOut(auth)
     .then(() => {
@@ -15,16 +23,33 @@ const ProfileScreen = () => {
       const errorMessage = error.message;
       alert(errorMessage);
     })
-}
-    return (
+  }
+
+  useEffect(() => {
+    if (currentUser?.photoURL){
+      setPhotoURL(currentUser.photoURL);
+    }
+  }, [currentUser])
+  
+  const [data, setData] = useState();
+  
+  useEffect(() =>{
+    getDoc(doc(db, "dataBaru", auth.currentUser.uid)).then((docSnap) => {
+      if (docSnap.exists) {
+        setData(docSnap.data());
+      }
+    })
+  });
+
+    return data ? (
     <View style={{flex: 1}}>
-    
+      
       <ScrollView contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
         <Image
           style={styles.profilePic}
-          source={{ uri: 'https://dummyimage.com/300x300/000/fff' }}
+          source={{ uri: photoURL }}
         />
         <Text style={styles.name}></Text>
         <View style={styles.biodata}>
@@ -33,7 +58,7 @@ const ProfileScreen = () => {
             </Text>
             <View style={styles.valuebox}>
               <Text style={styles.attributeval}>
-            Budi Aselole
+            {data.name || "isi profil anda"}
               </Text>
             </View>
 
@@ -42,7 +67,7 @@ const ProfileScreen = () => {
             </Text>
             <View style={styles.valuebox}>
               <Text style={styles.attributeval}>
-            26
+            {data.age || ""}
             </Text>
             </View>
 
@@ -51,7 +76,7 @@ const ProfileScreen = () => {
             </Text>
             <View style={styles.valuebox}>
               <Text style={styles.attributeval}>
-            Surabaya, Jawa Timur
+            {data.domisili || ""}
             </Text>
             </View>
 
@@ -61,7 +86,7 @@ const ProfileScreen = () => {
             </Text>
             <View style={styles.valuebox}>
               <Text style={styles.attributeval}>
-            Software Engineer
+            {data.profesi || ""}
             </Text>
             </View>
 
@@ -70,14 +95,15 @@ const ProfileScreen = () => {
             </Text>
             <View style={styles.valuebox}>
               <Text style={styles.attributeval}>
-              Saya adalah seorang pekerja keras yang sangat menghargai wanita. Saya mencari pasangan hidup yang mengerti agama dan mengerti saya.
+              {data.deskripsi || ""}
             </Text>
             </View>
 
       <TouchableOpacity
           style={styles.detailButton}
+          onPress={() => navigation.navigate('EditProfileScreen', {})}
         >
-          <Text style={styles.buttonText}>SIMPAN</Text>
+          <Text style={styles.buttonText}>EDIT PROFILE</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.detailButtonBack} onPress={handleSignOut}>
         <Text style={styles.buttonTextBack}>SIGN OUT</Text>
@@ -88,8 +114,9 @@ const ProfileScreen = () => {
         </View>
       </View>
       </ScrollView>
+      
     </View>
-    );
+    ) : null;
 }
 export default ProfileScreen
 const styles = StyleSheet.create({

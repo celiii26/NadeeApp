@@ -20,7 +20,7 @@ const DetailScreen = ({ route }) => {
         <View style={styles.container} key={item.id}>
         <Image
           style={styles.profilePic}
-          source={item.image}
+          source={{ uri: item.photoURL}}
         />
         <Text style={styles.name}></Text>
         <View style={styles.biodata}>

@@ -1,8 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
-import { auth } from '../firebase'
+import { auth } from '../firebase';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { setDoc, doc } from 'firebase/firestore';
+import db from "../firebase";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -14,6 +16,7 @@ const LoginScreen = () => {
     const unsubscribe = getAuth();
     onAuthStateChanged(auth, user => {
       if (user) {
+        
         navigation.replace("HomeTab")
       }
     })
@@ -24,6 +27,9 @@ const LoginScreen = () => {
   createUserWithEmailAndPassword(auth, email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
+        const collectionRef = doc(db, "dataBaru", user.uid);
+        const payload = { userID: user.uid };
+        setDoc(collectionRef, payload);
         console.log('Registered with:', user.email);
       })
       .catch(error => {

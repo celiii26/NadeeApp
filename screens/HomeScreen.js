@@ -11,9 +11,18 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import popularData from '../assets/Data/popularData';
 import { useFonts } from '@use-expo/font';
 import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
+import { useEffect, useState } from "react";
+import { onSnapshot, collection } from "firebase/firestore";
+import db from '../firebase'
 
 const HomeScreen = () => {
   const navigation = useNavigation()
+  const [data, setData] = useState([{ name: "Loading...", id: "initial" }]);
+
+  useEffect(() => onSnapshot(collection(db, "dataBaru"), (snapshot) =>
+    setData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    ), []);
+
 
   const [isLoaded] = useFonts({
     PoppinsLight: PoppinsLight,
@@ -22,17 +31,7 @@ const HomeScreen = () => {
   if (!isLoaded) {
     return <View />;
   }
-  const handleSignOut = () => {
-      signOut(auth)
-      .then(() => {
-        navigation.replace("Login")
-      })
-      .catch(error => {
-        const errorMessage = error.message;
-        alert(errorMessage);
-      })
-  }
-
+  
   return (
     
     <View style={styles.container}>
@@ -44,7 +43,7 @@ const HomeScreen = () => {
         
       <View style={styles.popularWrapper}>
 
-          {popularData.map((item) => (
+          {data.map((item) => (
       <TouchableOpacity
         key={item.id}
         onPress={() =>
@@ -71,7 +70,7 @@ const HomeScreen = () => {
           
 
           <View style={styles.popularCardRight}>
-            <Image source={item.image} style={styles.popularCardImage} />
+            <Image source={{ uri : item.photoURL }} style={styles.popularCardImage} />
           </View>
         </View>
       </TouchableOpacity>
@@ -172,7 +171,7 @@ const styles = StyleSheet.create({
   popularCardImage: {
     width: 90,
     height: 90,
-    resizeMode: 'contain',
+    resizeMode: 'object-fit',
     position: 'abosulte',
     borderRadius: 75,
     marginRight:15,
