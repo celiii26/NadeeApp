@@ -13,6 +13,7 @@ import RequestInbox from './screens/RequestInbox';
 import EditProfileScreen from './screens/EditProfileScreen';
 import { useNavigation } from '@react-navigation/core';
 import ProgressTaaruf from './screens/ProgressTaaruf';
+import InboxDetailScreen from './screens/InboxDetailScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ export default function App() {
         <Stack.Screen name="Request Sent" component={RequestSent} />
         <Stack.Screen name="Progress" component={ProgressTaaruf} />
         <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+        <Stack.Screen name="InboxDetailScreen" component={InboxDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -66,7 +68,7 @@ function Home() {
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="message" color={color} size={size} />
         ),
-        tabBarBadge: 3,
+        tabBarBadge: 2,
       }}
     />
     <Tab.Screen
