@@ -8,10 +8,22 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
 } from 'react-native'
 import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
 import { useFonts } from '@use-expo/font';
+import { deleteDoc, doc } from 'firebase/firestore';
+import db from "../firebase"
+import { useAuth } from '../firebase'
 
 const RequestSent = ({ route }) => {
   const { item } = route.params;
   const navigation = useNavigation()
+  const currentUser = useAuth();
+
+  const handleBatalkan = async () => {
+    const collectionRef = doc(db, "request", currentUser.uid);
+    await deleteDoc(collectionRef);
+    alert("Pengajuan Taaruf telah dibatalkan");
+    navigation.navigate('Home');
+  };
+  
   const [isLoaded] = useFonts({
     PoppinsLight: PoppinsLight,
   });
@@ -58,7 +70,7 @@ const RequestSent = ({ route }) => {
       </View>
 
       <View style={styles.popularCardRight}>
-        <Image source={item.image} style={styles.popularCardImage} />
+        <Image source={{ uri: item.photoURL }} style={styles.popularCardImage} />
       </View>
     </View>
   </TouchableOpacity>
@@ -68,7 +80,7 @@ const RequestSent = ({ route }) => {
       </Text>
   </TouchableOpacity>
   <TouchableOpacity style={styles.detailButtonBack} onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.buttonTextBack}>Batalkan Taaruf</Text>
+        <Text style={styles.buttonTextBack} onPress={handleBatalkan}>Batalkan Taaruf</Text>
       </TouchableOpacity>
   </View>
   );

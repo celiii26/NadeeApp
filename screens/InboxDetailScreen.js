@@ -8,26 +8,11 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
   } from 'react-native'
 import popularData from '../assets/Data/popularData';
 import { color } from 'react-native-reanimated';
-import db from "../firebase"
-import { auth, useAuth, upload } from '../firebase'
-import { updateProfile } from "firebase/auth"
-import { useEffect, useState } from 'react';
-import { doc, setDoc } from "firebase/firestore";
 
 
-const DetailScreen = ({ route }) => {
-  const { item } = route.params;
-  const navigation = useNavigation();
-  const currentUser = useAuth();
-  const handleAjukan = async () => {
-    const collectionRef = doc(db, "request", currentUser.uid);
-    const payload = { pengirim: currentUser.uid, penerima : item.userID, status: "pending"};
-    await setDoc(collectionRef, payload);
-    navigation.navigate('Request Sent', { item: item })
-  };
-
-
-    
+const InboxDetailScreen = ({ route }) => {
+    const { item } = route.params;
+    const navigation = useNavigation();
     return (
         <View>
           <ScrollView        contentInsetAdjustmentBehavior="automatic"
@@ -88,9 +73,9 @@ const DetailScreen = ({ route }) => {
         </View>
         <TouchableOpacity
           style={styles.detailButton}
-          onPress={handleAjukan}
+          onPress={() => navigation.navigate('Request Sent', { item: item })}
         >
-          <Text style={styles.buttonText}>Ajukan Taaruf</Text>
+          <Text style={styles.buttonText}>Terima Taaruf</Text>
         </TouchableOpacity>
 
        
@@ -99,7 +84,7 @@ const DetailScreen = ({ route }) => {
     </View>
     )};
 
-export default DetailScreen
+export default InboxDetailScreen
 const styles = StyleSheet.create({
   buttonText: {
     color: 'white',

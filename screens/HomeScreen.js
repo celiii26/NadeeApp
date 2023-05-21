@@ -12,16 +12,20 @@ import popularData from '../assets/Data/popularData';
 import { useFonts } from '@use-expo/font';
 import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
 import { useEffect, useState } from "react";
-import { onSnapshot, collection } from "firebase/firestore";
+import { onSnapshot, collection, getDoc } from "firebase/firestore";
 import db from '../firebase'
+import { auth, useAuth} from '../firebase';
 
 const HomeScreen = () => {
   const navigation = useNavigation()
+  const currentUser = useAuth();
   const [data, setData] = useState([{ name: "Loading...", id: "initial" }]);
+
 
   useEffect(() => onSnapshot(collection(db, "dataBaru"), (snapshot) =>
     setData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     ), []);
+    console.log(data);
 
 
   const [isLoaded] = useFonts({

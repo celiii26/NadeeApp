@@ -9,12 +9,54 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
 import requestData from '../assets/data/requestData'
 import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
 import { useFonts } from '@use-expo/font';
+import { auth, useAuth} from '../firebase';
+import { onSnapshot, collection, query, where, doc, getDoc, getDocs } from "firebase/firestore";
+import db from '../firebase';
+import { useEffect, useState } from 'react';
 
 const RequestInbox = () => {
   const navigation = useNavigation()
+  const currentUser = useAuth();
   const [isLoaded] = useFonts({
     PoppinsLight: PoppinsLight,
   });
+
+  const getRequest = async () => {
+    try {
+      const q = query(collection(db, "request"), where("penerima", "==", auth.currentUser.uid));
+      const snapshot = await getDocs(q);
+      const listPengirim = [];
+      
+      const promises = snapshot.docs.map(async (snap) => {
+        const req ={
+          id: snap.id, ...snap.data(),
+        };
+
+        const pengirim = await getDoc(doc(db, "dataBaru", req.pengirim));
+        req.sender = pengirim.data();
+
+        return req;
+      });
+
+      const result = await Promise.all(promises);
+      listPengirim.push(...result);
+      return listPengirim;
+    } catch (error) {
+      console.error('Error mendapatkan daftar permintaan pertemanan:', error);
+      return [];
+    }
+  };
+
+  const [dataReq, setDataReq] = useState([]);
+  useEffect(() => {
+    const fetchReq = async () => {
+      const requests = await getRequest();
+      setDataReq(requests);
+    };
+    fetchReq();
+  }, []);
+  console.log(dataReq)
+
 
   if (!isLoaded) {
     return <View />;
@@ -29,12 +71,12 @@ const RequestInbox = () => {
         
       <View style={styles.popularWrapper}>
 
-          {requestData.map((item) => (
+          {dataReq.map((item) => (
       <TouchableOpacity
         key={item.id}
         onPress={() =>
-          navigation.navigate('DetailScreen', {
-            item: item,
+          navigation.navigate('InboxDetailScreen', {
+            item: item.sender,
           })
         }
       >
@@ -49,16 +91,16 @@ const RequestInbox = () => {
           <View>
             <View>
               <View style={styles.popularTitlesWrapper}>
-                <Text style={styles.popularTitlesTitle}>{item.name}</Text>
-                <Text style={styles.popularTitlesTitle}>{item.age} tahun</Text>
-                <Text style={styles.popularTitlesTitle}>{item.profesi}</Text>
-                <Text style={styles.popularTitlesTitle}>{item.domisili}</Text>
+                <Text style={styles.popularTitlesTitle}>{item.sender.name}</Text>
+                <Text style={styles.popularTitlesTitle}>{item.sender.age} tahun</Text>
+                <Text style={styles.popularTitlesTitle}>{item.sender.profesi}</Text>
+                <Text style={styles.popularTitlesTitle}>{item.sender.domisili}</Text>
               </View>
             </View>
           </View>
 
           <View style={styles.popularCardRight}>
-            <Image source={item.image} style={styles.popularCardImage} />
+            <Image source={{ uri: item.sender.photoURL }} style={styles.popularCardImage} />
           </View>
         </View>
       </TouchableOpacity>
@@ -70,7 +112,7 @@ const RequestInbox = () => {
 
     </View>
   )
-}
+} 
 
 export default RequestInbox;
 
@@ -249,7 +291,7 @@ const styles = StyleSheet.create({
   popularCardImage: {
     width: 90,
     height: 90,
-    resizeMode: 'contain',
+    resizeMode: 'object-fit',
     position: 'abosulte',
     borderRadius: 75,
     marginRight:15,

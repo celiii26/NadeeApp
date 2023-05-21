@@ -50,7 +50,7 @@ const ProgressTaaruf = () => {
         >
           
               <View style={styles.popularTitlesWrapper}>
-                <Text style={styles.tanggal}>7 Mei 2023</Text>
+                <Text style={styles.tanggal}>21 Mei 2023</Text>
                 <Text style={styles.popularTitlesTitle}>Permintaan taaruf sedang diproses.</Text>
               </View>
           
@@ -60,7 +60,7 @@ const ProgressTaaruf = () => {
         >
           
               <View style={styles.popularTitlesWrapper}>
-                <Text style={styles.tanggal}>10 Mei 2023</Text>
+                <Text style={styles.tanggal}>22 Mei 2023</Text>
                 <Text style={styles.popularTitlesTitle}>Permintaan taaruf diterima.</Text>
               </View>
           
@@ -70,7 +70,7 @@ const ProgressTaaruf = () => {
         >
           
               <View style={styles.popularTitlesWrapper}>
-                <Text style={styles.tanggal}>13 Mei 2023</Text>
+                <Text style={styles.tanggal}>22 Mei 2023</Text>
                 <Text style={styles.popularTitlesTitle}>Sedang dialokasikan pendamping taaruf.</Text>
               </View>
           
@@ -80,7 +80,7 @@ const ProgressTaaruf = () => {
         >
           
               <View style={styles.popularTitlesWrapper}>
-                <Text style={styles.tanggal}>14 Mei 2023</Text>
+                <Text style={styles.tanggal}>24 Mei 2023</Text>
                 <Text style={styles.popularTitlesTitle}>Pendamping taaruf (Iwan: 0899999999) telah menghubungi anda melalui WhatsApp.</Text>
               </View>
           

@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 const EditProfileScreen = () => {
   const currentUser = useAuth();
   const [name, setName] = useState('');
+  const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const [domisili, setDomisili] = useState('');
   const [profession, setProfession] = useState('');
@@ -19,7 +20,7 @@ const EditProfileScreen = () => {
 
   const handleNewProfile = async () => {
     const collectionRef = doc(db, "dataBaru", currentUser.uid);
-    const payload = { name: name, age: age, domisili: domisili, profesi: profession, deskripsi: description, photoURL: photoURL, userID: currentUser.uid };
+    const payload = { name: name, gender: gender, age: age, domisili: domisili, profesi: profession, deskripsi: description, photoURL: photoURL, userID: currentUser.uid };
     await setDoc(collectionRef, payload);
     upload(photo, currentUser, setLoading);
   };
@@ -33,6 +34,9 @@ const EditProfileScreen = () => {
       setPhoto(e.target.files[0])
     }
   }
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
   useEffect(() => {
     if (currentUser?.photoURL){
       setPhotoURL(currentUser.photoURL);
@@ -46,8 +50,17 @@ const EditProfileScreen = () => {
         source={{ uri: photoURL }}
       />
       <input type='file' onChange={handleBrowse} />
+      <Text style={styles.attribute}>Gender</Text>
+      
       <Text style={styles.name}></Text>
       <View style={styles.biodata}>
+      <View style={styles.valuebox}>
+      <select value={gender} onChange={handleGenderChange}>
+        <option value="">Pilih gender</option>
+        <option value="Perempuan">Perempuan</option>
+        <option value="Laki-laki">Laki-laki</option>
+      </select>
+      </View>
           <Text style={styles.attribute}>
           Nama
           </Text>

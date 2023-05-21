@@ -58,7 +58,7 @@ const ProfileScreen = () => {
             </Text>
             <View style={styles.valuebox}>
               <Text style={styles.attributeval}>
-            {data.name || "isi profil anda"}
+            {data.name || "Segera isi profil anda!!"}
               </Text>
             </View>
 
