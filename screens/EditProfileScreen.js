@@ -3,7 +3,6 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, Button, TextInput } from 'react-native';
 import db from "../firebase"
 import { auth, useAuth, upload } from '../firebase'
-import { updateProfile } from "firebase/auth"
 import { useEffect, useState } from 'react';
 
 const EditProfileScreen = () => {

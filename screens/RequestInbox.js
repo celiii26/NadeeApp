@@ -6,7 +6,6 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
   ScrollView,
   Button,
 } from 'react-native'
-import requestData from '../assets/data/requestData'
 import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
 import { useFonts } from '@use-expo/font';
 import { auth, useAuth} from '../firebase';

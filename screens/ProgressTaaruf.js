@@ -8,7 +8,6 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
 } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import popularData from '../assets/Data/popularData';
 import { useFonts } from '@use-expo/font';
 import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
 

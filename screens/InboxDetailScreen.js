@@ -6,7 +6,6 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
     ScrollView,
     Button,
   } from 'react-native'
-import popularData from '../assets/Data/popularData';
 import { color } from 'react-native-reanimated';
 
 
