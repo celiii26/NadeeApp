@@ -18,25 +18,54 @@ const HomeScreen = () => {
   const navigation = useNavigation()
   const currentUser = useAuth();
   const [data, setData] = useState([{ name: "Loading...", id: "initial" }]);
+  const [filteredDataP, setFilteredDataP] = useState([]);
+  const [filteredDataL, setFilteredDataL] = useState([]);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'dataBaru'), (snapshot) => {
+      const allData = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+  
+      const filteredDataL = allData.filter((item) => item.gender === 'Laki-laki');
+      setFilteredDataL(filteredDataL);
+  
+      const filteredDataP = allData.filter((item) => item.gender === 'Perempuan');
+      setFilteredDataP(filteredDataP);
+    });
+  
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  
+  
 
-
-  useEffect(() => onSnapshot(collection(db, "dataBaru"), (snapshot) =>
-    setData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    ), []);
-    console.log(data);
   
   return (
-    
+
     <View style={styles.container}>
       <View style={styles.cardheader}>
       </View>
+
       <ScrollView
+
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>
-        
+        <View style={styles.buttonContainer}>
+        <TouchableOpacity
+        onPress={() =>
+                    navigation.navigate('EdukasiTaaruf')
+                  }
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Edukasi Taaruf</Text>
+        </TouchableOpacity></View>
+        <Text style={styles.jenisGender}>
+          Akhwat (Perempuan)
+        </Text>
       <View style={styles.popularWrapper}>
-
-          {data.map((item) => (
+          {filteredDataP.map((item) => (
       <TouchableOpacity
         key={item.id}
         onPress={() =>
@@ -70,6 +99,45 @@ const HomeScreen = () => {
     ))}
 
         </View>
+        <Text style={styles.jenisGender}>
+          Ikhwan (Laki-laki)
+        </Text>
+        <View style={styles.popularWrapper}>
+          {filteredDataL.map((item) => (
+      <TouchableOpacity
+        key={item.id}
+        onPress={() =>
+          navigation.navigate('DetailScreen', {
+            item: item,
+          })
+        }
+      >
+        <View
+          style={[
+            styles.popularCardWrapper,
+            {
+              marginTop: item.id == 1 ? 10 : 20,
+            },
+          ]}
+        >
+          
+              <View style={styles.popularTitlesWrapper}>
+                <Text style={styles.popularTitlesTitle}>{item.name}</Text>
+                <Text style={styles.popularTitlesTitle}>{item.age} tahun</Text>
+                <Text style={styles.popularTitlesTitle}>{item.profesi}</Text>
+                <Text style={styles.popularTitlesTitle}>{item.domisili}</Text>
+              </View>
+          
+
+          <View style={styles.popularCardRight}>
+            <Image source={{ uri : item.photoURL }} style={styles.popularCardImage} />
+          </View>
+        </View>
+      </TouchableOpacity>
+    ))}
+
+        </View>
+
         </ScrollView>
       
     </View>
@@ -150,6 +218,16 @@ const styles = StyleSheet.create({
     color: 'black',
     flexDirection: 'column',
   },
+  jenisGender: {
+    color: '#6E485B',
+    fontWeight: '700',
+    fontSize: 20,
+    flexDirection: 'column',
+    paddingTop: 20,
+    paddingBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
   popularCardRight: {
     position: 'absolute', // Set the position property to 'absolute'
@@ -164,5 +242,35 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     marginRight:15,
 
+  },
+  buttonContainer: {
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+    width: 300,
+  },
+  button: {
+    backgroundColor: '#85586F',
+    width: '100%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonOutline: {
+    backgroundColor: 'white',
+    marginTop: 5,
+    borderColor: '#85586F',
+    borderWidth: 2,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: '#85586F',
+    fontWeight: '700',
+    fontSize: 16,
   },
 })

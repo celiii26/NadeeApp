@@ -249,6 +249,7 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
     },
     popularTitlesTitle: {
+      fontFamily: 'PoppinsLight',
       fontSize: 12,
       color: 'black',
       flexDirection: 'column',
@@ -286,14 +287,18 @@ const styles = StyleSheet.create({
     popularCardImage: {
       width: 90,
       height: 90,
+      resizeMode: 'contain',
+      position: 'abosulte',
       borderRadius: 75,
       marginRight:15,
   
     },
     asalDaerah: {
+      fontFamily: 'arial',
       fontSize: 12,
       color: 'black',
       flexDirection: 'column',
     }
   })
+
 

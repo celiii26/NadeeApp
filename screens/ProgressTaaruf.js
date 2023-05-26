@@ -156,11 +156,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   popularTitlesTitle: {
+    fontFamily: 'PoppinsLight',
     fontSize: 10,
     color: 'black',
     flexDirection: 'column',
   },
   tanggal: {
+    fontFamily: 'PoppinsLight',
     fontSize: 10,
     color: '#6E485B',
     flexDirection: 'column',
@@ -176,6 +178,8 @@ const styles = StyleSheet.create({
   popularCardImage: {
     width: 90,
     height: 90,
+    resizeMode: 'contain',
+    position: 'abosulte',
     borderRadius: 75,
     marginRight:15,
 
