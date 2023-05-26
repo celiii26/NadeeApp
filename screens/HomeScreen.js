@@ -9,7 +9,6 @@ import { StyleSheet, Text, TouchableOpacity, View, Image,
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFonts } from '@use-expo/font';
-import PoppinsLight from '../assets/fonts/Poppins-Light.ttf'
 import { useEffect, useState } from "react";
 import { onSnapshot, collection, getDoc } from "firebase/firestore";
 import db from '../firebase'
@@ -25,15 +24,6 @@ const HomeScreen = () => {
     setData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     ), []);
     console.log(data);
-
-
-  const [isLoaded] = useFonts({
-    PoppinsLight: PoppinsLight,
-  });
-
-  if (!isLoaded) {
-    return <View />;
-  }
   
   return (
     
@@ -117,7 +107,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   titlesTitle: {
-    fontFamily: 'arial',
     fontSize: 32,
     color: 'black',
     marginTop: 5,
@@ -127,7 +116,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   popularTitle: {
-    fontFamily: 'arial',
     fontSize: 16,
   },
   popularCardWrapper: {
@@ -158,7 +146,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   popularTitlesTitle: {
-    fontFamily: 'PoppinsLight',
     fontSize: 10,
     color: 'black',
     flexDirection: 'column',
@@ -174,8 +161,6 @@ const styles = StyleSheet.create({
   popularCardImage: {
     width: 90,
     height: 90,
-    resizeMode: 'object-fit',
-    position: 'abosulte',
     borderRadius: 75,
     marginRight:15,
 

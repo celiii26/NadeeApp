@@ -188,9 +188,6 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       paddingHorizontal: 20,
     },
-    filecontainer: {
-
-    },
     valuebox: {
       backgroundColor: "#EFF0F2",
       paddingHorizontal: 10,
@@ -204,14 +201,12 @@ const styles = StyleSheet.create({
       
     },
     attribute: {
-      font: "Poppins",
       fontSize: 15,
       fontWeight: 500,
       textAlign: 'left',
       marginBottom: 3,
     },
     attributeval: {
-      font: "Poppins",
       fontSize: 15,
       fontWeight: 300,
       textAlign: 'left',

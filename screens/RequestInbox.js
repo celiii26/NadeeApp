@@ -169,12 +169,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   titlesSubtitle: {
-    fontFamily: 'arial',
     fontSize: 16,
     color: 'black',
   },
   titlesTitle: {
-    fontFamily: 'arial',
     fontSize: 32,
     color: 'black',
     marginTop: 5,
@@ -192,7 +190,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
   },
   searchText: {
-    fontFamily: 'arial',
     fontSize: 14,
     marginBottom: 5,
     color: "black",
@@ -202,7 +199,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   popularTitle: {
-    fontFamily: 'arial',
     fontSize: 16,
   },
   popularCardWrapper: {
@@ -235,7 +231,6 @@ const styles = StyleSheet.create({
    },
   popularTopText: {
     marginLeft: 10,
-    fontFamily: 'arial',
     fontSize: 14,
   },
   popularTitlesWrapper: {
@@ -243,7 +238,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   popularTitlesTitle: {
-    fontFamily: 'PoppinsLight',
     fontSize: 10,
     color: 'black',
     flexDirection: 'column',
@@ -267,7 +261,6 @@ const styles = StyleSheet.create({
   buttonName: {
     color: "#F5F5F5",
     fontSize: 12,
-    fontFamily: 'arial',
   },
   ratingWrapper: {
     flexDirection: 'row',
@@ -275,7 +268,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   rating: {
-    fontFamily: 'arial',
     fontSize: 12,
     color: 'black',
     marginLeft: 5,
@@ -290,15 +282,12 @@ const styles = StyleSheet.create({
   popularCardImage: {
     width: 90,
     height: 90,
-    resizeMode: 'object-fit',
-    position: 'abosulte',
     borderRadius: 75,
     marginRight:15,
 
   },
 
   asalDaerah: {
-    fontFamily: 'arial',
     fontSize: 12,
     color: 'black',
     flexDirection: 'column',
