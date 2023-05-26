@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.js": "/static/js/main.55809939.js",
+    "static/js/259.b260f041.js": "/static/js/259.b260f041.js",
+    "static/media/MaterialCommunityIcons.ttf": "/static/media/MaterialCommunityIcons.5d42b4e60858731e7b65.ttf",
+    "static/media/Poppins-Light.ttf": "/static/media/Poppins-Light.25b96349cf564e8ba0dc.ttf",
+    "static/media/logoNadee1.png": "/static/media/logoNadee1.2cfc41e18ed187ef7036.png",
+    "favicon.ico": "/favicon.ico",
+    "index.html": "/index.html",
+    "favicon-32.png": "/favicon-32.png",
+    "favicon-16.png": "/favicon-16.png",
+    "manifest.json": "/manifest.json",
+    "serve.json": "/serve.json",
+    "main.55809939.js.map": "/static/js/main.55809939.js.map",
+    "259.b260f041.js.map": "/static/js/259.b260f041.js.map"
+  },
+  "entrypoints": [
+    "static/js/259.b260f041.js",
+    "static/js/main.55809939.js"
+  ]
+}
