@@ -18,10 +18,11 @@ const EditProfileScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const handleNewProfile = async () => {
+    upload(photo, currentUser, setLoading);
+    setPhotoURL(currentUser.photoURL);
     const collectionRef = doc(db, "dataBaru", currentUser.uid);
     const payload = { name: name, gender: gender, age: age, domisili: domisili, profesi: profession, deskripsi: description, photoURL: photoURL, userID: currentUser.uid };
     await setDoc(collectionRef, payload);
-    upload(photo, currentUser, setLoading);
   };
 
   function handleClick() {
